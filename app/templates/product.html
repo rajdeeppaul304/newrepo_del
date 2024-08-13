@@ -1,0 +1,274 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+    .product-detail-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        background-color: #fff;
+        max-width: 100%;
+        margin: 0 auto;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .product-image-carousel img {
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .product-info {
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .product-price {
+        font-size: 1.2em;
+        margin: 10px 0;
+    }
+
+    .current-price {
+        color: red;
+        font-size: 1.8em;
+    }
+
+    .original-price {
+        text-decoration: line-through;
+        color: #888;
+        margin-left: 10px;
+    }
+
+    .product-title {
+        font-size: 1.6em;
+        margin: 10px 0;
+    }
+
+    .product-stock-sold {
+        font-size: 0.9em;
+        color: #666;
+        margin: 10px 0;
+    }
+
+    .product-buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .product-buttons button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        margin: 0 10px;
+        cursor: pointer;
+        font-size: 1em;
+    }
+
+    .add-to-cart {
+        background-color: #f1c40f;
+        color: #fff;
+    }
+
+    .buy-now {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+
+    /* Style for the bottom fixed navbar */
+    .bottom-navbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #ffffff;
+        border-top: 1px solid #eaeaea;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px 0;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    .bottom-navbar .nav-item,
+    .bottom-navbar .add-to-cart {
+        flex: 1;
+        text-align: center;
+        text-decoration: none;
+        color: #333;
+        font-size: 0.9em;
+    }
+
+    .bottom-navbar .nav-item i,
+    .bottom-navbar .add-to-cart span {
+        font-size: 24px;
+    }
+
+    .bottom-navbar .add-to-cart {
+        flex: 2;
+        background-color: #f1c40f;
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .bottom-navbar .add-to-cart span {
+        display: block;
+        font-size: 1.1em;
+        font-weight: bold;
+        height: 100%;
+    }
+
+    .fas {
+        font-size: 20px;
+    }
+
+    .recommendations {
+        margin: 20px 0;
+        padding: 0 20px;
+        text-align: left;
+        margin-bottom: 100px;
+    }
+
+    .recommendations h2 {
+        font-size: 1.4em;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .recommendations .recommendation-items {
+        display: flex;
+        overflow-x: auto;
+        gap: 20px;
+    }
+
+    .recommendations .recommendation-item {
+        flex: 0 0 150px;
+        background: #f8f8f8;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .recommendation-item {
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.recommendation-item:hover {
+    background-color: #eaeaea;
+}
+
+.recommendation-price {
+    font-size: 1em;
+    color: #e74c3c; /* Use a color that stands out, e.g., red */
+    margin-top: 5px;
+}
+
+
+    .recommendations .recommendation-item img {
+        width: 100%;
+        max-height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .recommendations .recommendation-item h3 {
+        font-size: 0.9em;
+        margin-top: 10px;
+        color: #333;
+    }
+
+    .product-details {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.product-details h2 {
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.product-details p {
+    font-size: 1em;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+</style>
+
+<div class="product-detail-container">
+    <div class="product-image-carousel">
+        <img src="{{ url_for('static', filename= product.src) }}" alt="{{ product.title }}">
+    </div>
+    <div class="product-info">
+        <div class="product-price">
+            <span class="current-price">RM{{ product.sale_price }}</span>
+            <span class="original-price">ORP: RM{{ product.regular_price }}</span>
+        </div>
+        <h1 class="product-title">{{ product.title }}</h1>
+        <div class="product-stock-sold">
+            <span>Stock: {{ product.stock }}</span>
+            <span>Sold: {{ product.sold }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="product-details">
+    <h2>Product Details</h2>
+    <p><strong>Description:</strong> {{ product.description }}</p>
+
+</div>
+
+<div class="recommendations">
+    <h2>Recommended Products</h2>
+    <div class="recommendation-items">
+        {% for rec in recommendations %}
+        <div class="recommendation-item">
+            <img src="{{ url_for('static', filename=rec.src) }}" alt="{{ rec.title }}">
+            <h3>{{ rec.title }}</h3>
+            <p class="recommendation-price">RM {{ rec.sale_price }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<div class="bottom-navbar">
+    <a href="/" class="nav-item">
+        <i class="fas fa-home" aria-hidden="true"></i>
+        <span>Home</span>
+    </a>
+    <a href="/cart" class="nav-item">
+        <i class="fas fa-cart-shopping"></i>
+        <span>Cart</span>
+    </a>
+    <button class="add-to-cart">
+        <span>Add to Cart</span>
+    </button>
+</div>
+
+{% endblock %}

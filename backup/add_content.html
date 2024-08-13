@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Content</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto my-8 p-4 bg-white rounded shadow">
+        <h2 class="text-2xl font-bold mb-4">Edit Content</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="mb-4">
+                {% for category, message in messages %}
+                    <div class="bg-{{ category }}-100 border border-{{ category }}-400 text-{{ category }}-700 px-4 py-3 rounded relative" role="alert">
+                        <strong class="font-bold">{{ message }}</strong>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+        <form id="content-form" method="POST" action="{{ url_for('admin_bp.add_content') }}">
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                    <thead>
+                        <tr class="bg-gray-100 border-b border-gray-300">
+                            <th class="py-2 px-4 text-left text-gray-700">Image</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Title</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Tags</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Category</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Regular Price</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Sale Price</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Product ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key, item in content.items() %}
+                        <tr class="border-b border-gray-300">
+                            <td class="py-2 px-4">
+                                <img src="{{ url_for('static', filename='images/products/' ~ item.src) }}" alt="{{ item.title }}" class="w-16 h-16 object-cover rounded">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="title" data-key="{{ key }}" value="{{ item.title }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="tags" data-key="{{ key }}" value="{{ item.tags }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="category" data-key="{{ key }}" value="{{ item.category }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="regular_price" data-key="{{ key }}" value="{{ item.regular_price }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="sale_price" data-key="{{ key }}" value="{{ item.sale_price }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="id" data-key="{{ key }}" value="{{ item.id }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" readonly>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <input type="hidden" name="content_json" id="content_json">
+            <div class="mt-4">
+                <button type="button" onclick="prepareData()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        let isFormSubmitting = false;
+    
+        window.addEventListener('beforeunload', function (e) {
+            if (isFormSubmitting) return; // Skip confirmation if the form is being submitted
+    
+            const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
+            e.preventDefault();
+            e.returnValue = confirmationMessage;
+            return confirmationMessage;
+        });
+    
+        function prepareData() {
+            const form = document.getElementById('content-form');
+            const content = {};
+            const items = form.querySelectorAll('tr.border-b');
+    
+            items.forEach(item => {
+                const titleInput = item.querySelector('input[name="title"]');
+                if (!titleInput) return;
+    
+                const key = titleInput.getAttribute('data-key');
+    
+                const imgElement = item.querySelector('img');
+                const src = imgElement ? imgElement.src.split('/').pop() : '';
+    
+                const tagsInput = item.querySelector('input[name="tags"]');
+                const tags = tagsInput ? tagsInput.value : '';
+    
+                const categoryInput = item.querySelector('input[name="category"]');
+                const category = categoryInput ? categoryInput.value : '';
+    
+                const regularPriceInput = item.querySelector('input[name="regular_price"]');
+                const regular_price = regularPriceInput ? regularPriceInput.value : '';
+    
+                const salePriceInput = item.querySelector('input[name="sale_price"]');
+                const sale_price = salePriceInput ? salePriceInput.value : '';
+    
+                const idInput = item.querySelector('input[name="id"]');
+                const id = idInput ? idInput.value : '';
+    
+                content[key] = {
+                    src,
+                    title: titleInput.value,
+                    tags,
+                    category,
+                    regular_price,
+                    sale_price,
+                    id
+                };
+            });
+    
+            document.getElementById('content_json').value = JSON.stringify(content);
+            
+            // Set the flag to true to indicate the form is submitting
+            isFormSubmitting = true;
+            form.submit(); // Submit the form
+        }
+    </script>
+    
+</body>
+</html>

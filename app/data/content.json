@@ -1,0 +1,39 @@
+{
+    "1": {
+        "src": "1.jpg",
+        "title": "asdf22121",
+        "tags": "new, reommended,popular,promotional",
+        "category": "mobile_phone",
+        "regular_price": "200.00",
+        "sale_price": "300",
+        "id": "CMR-10000",
+        "description": "asdf",
+        "stock": "12",
+        "sold": "332",
+        "test": "new"
+    },
+    "2": {
+        "src": "2.jpg",
+        "title": "toy",
+        "tags": "new",
+        "category": "laptop",
+        "regular_price": "500",
+        "sale_price": "222",
+        "id": "CMR-10001",
+        "description": "lorem ipsum",
+        "stock": "30",
+        "sold": "4021"
+    },
+    "3": {
+        "src": "3.png",
+        "title": "zxcv",
+        "tags": "new,promotional",
+        "category": "laptop",
+        "regular_price": "22",
+        "sale_price": "2342",
+        "id": "CMR-10002",
+        "description": "asdf",
+        "stock": "33",
+        "sold": "33"
+    }
+}

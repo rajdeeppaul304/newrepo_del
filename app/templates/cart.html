@@ -1,0 +1,411 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+    .checkout-container {
+    padding: 20px;
+}
+
+.address-section {
+    margin-bottom: 20px;
+}
+
+.address-section textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Container for the list of products */
+.products-list {
+    margin-bottom: 20px;
+    padding: 20px; /* Adds padding inside the container */
+    border: 1px solid #ddd; /* Adds a border around the container */
+    border-radius: 8px; /* Rounds the corners of the container */
+    background-color: #f9f9f9; /* Light background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Individual product items */
+.product-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px; /* Adds padding inside each product item */
+    border: 1px solid #ddd; /* Border around each item */
+    border-radius: 8px; /* Rounds the corners of each item */
+    background-color: #fff; /* White background color for each item */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for product items */
+.product-item:hover {
+    background-color: #f1f1f1; /* Light grey background on hover */
+}
+
+/* Styling for product image */
+.product-item img {
+    width: 80px; /* Fixed width for product image */
+    height: 80px; /* Fixed height for product image */
+    object-fit: cover; /* Ensure the image covers the container */
+    margin-right: 15px; /* Space between image and text */
+    border-radius: 4px; /* Rounded corners for the image */
+}
+
+/* Styling for product details */
+.product-item .details {
+    flex: 1; /* Allows details to take up remaining space */
+}
+
+/* Styling for product title */
+.product-item .title {
+    font-size: 16px; /* Font size for the product title */
+    font-weight: bold; /* Makes the title bold */
+    margin: 0; /* Removes default margin */
+}
+
+/* Styling for product description */
+.product-item .description {
+    font-size: 14px; /* Font size for the product description */
+    color: #555; /* Dark grey color for the description */
+    margin: 5px 0; /* Margin above and below the description */
+}
+
+/* Styling for product price */
+.product-item .price {
+    font-size: 14px; /* Font size for the product price */
+    color: #000; /* Black color for the price */
+    font-weight: bold; /* Makes the price bold */
+}
+.product-item img {
+    max-height: 72px;
+    margin-right: 10px;
+}
+
+.title-price {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkout-summary {
+    position: fixed; /* Fix the element to the viewport */
+    bottom: 0; /* Align it to the bottom */
+    left: 0; /* Align it to the left */
+    width: 100%; /* Make it span the full width */
+    display: flex; /* Use Flexbox for internal layout */
+    justify-content: space-between; /* Space out children */
+    align-items: center; /* Center items vertically */
+    padding: 10px; /* Add padding */
+    background-color: #f9f9f9; /* Background color */
+    border-top: 1px solid #ddd; /* Border at the top */
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.checkout-summary p {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.checkout-summary button {
+    background-color: #ffc107;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.checkout-summary button:hover {
+    background-color: #e0a800;
+}
+
+
+.address-section {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    height: 100px;
+}
+
+.submit-button {
+    background-color: #ffc107;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.submit-button:hover {
+    background-color: #e0a800;
+}
+
+
+.address-section {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    height: 100px;
+}
+
+.submit-button {
+    background-color: #ffc107;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.submit-button:hover {
+    background-color: #e0a800;
+}
+
+
+#collapsed-address {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+}
+
+.collapsed-address-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#display-name-number {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1em;
+}
+
+#display-address {
+    font-size: 1.1em;
+    color: #333;
+    margin-top: 10px;
+}
+
+
+
+#edit-address-section {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+}
+
+.cancel-button {
+    background-color: #ccc;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.cancel-button:hover {
+    background-color: #bbb;
+}
+
+#collapsed-address {
+    background-color: #f9f9f9; /* Light background for the collapsed address */
+    border: 1px solid #ddd; /* Border for the collapsed address */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding inside the box */
+    margin: 15px 0; /* Margin around the box */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex;
+}
+
+.collapsed-address-header {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Space between the lines */
+}
+
+#display-name-number {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-weight: bold; /* Make the name and number bold */
+    color: #333; /* Dark text color for better readability */
+}
+
+#display-address {
+    display: flex;
+    width: 100%;
+    color: #555; /* Slightly lighter color for the address */
+}
+
+
+</style>
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Load cart from localStorage
+    const staticUrlPrefix = "{{ url_for('static', filename='') }}";
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Parse content JSON from server into a JavaScript object
+    let content = JSON.parse('{{ content|tojson|safe }}');
+    
+    document.getElementById('item-number').textContent = cart.length;
+
+    // Convert content object to an array
+    let contentArray = Object.values(content);
+
+    function redirectToProductPage(productId) {
+    // Replace 'product-id-123' with the actual product ID you want to redirect to
+    window.location.href = '/product/' + productId;
+}
+    console.log(contentArray, )
+    // Display the products in the cart
+    function displayCartProducts() {
+        const productsList = document.querySelector('.products-list');
+        productsList.innerHTML = ''; // Clear the list first
+
+        cart.forEach(item => {
+            // Find the product in contentArray using the id
+            let product = contentArray.find(product => product.id === item.id);
+            if (product) {
+                console.log(product.src )
+                let productHtml = `
+                    <div class="product-item" onclick="window.location.href='/product/${product.id}'">
+
+                        <img src="${staticUrlPrefix}images/products/${product.src}" alt="${product.title}">
+                        <div class="title-price">
+                            <h3>${product.title}</h3>
+                            <p>RM ${product.sale_price}</p>
+                            <p>Quantity: ${item.quantity}</p>
+                        </div>
+
+                    </div>
+                `;
+                productsList.innerHTML += productHtml;
+            }
+        });
+
+        updateTotalPrice();
+    }
+
+    // Update the total price
+    function updateTotalPrice() {
+        let totalPrice = cart.reduce((total, item) => {
+            let product = contentArray.find(product => product.id === item.id);
+            return total + (item.quantity * (product ? product.sale_price : 0));
+        }, 0);
+        document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+    }
+
+    // Redirect to /pay
+    window.proceedToPay = function() {
+        window.location.href = '/checkout';
+    };
+
+    displayCartProducts();
+});
+
+
+
+</script>
+<div class="checkout-container">
+    <h2>Cart</h2>
+
+
+    
+        
+    <style>
+        .title-price p, h3{
+            margin: 0;
+        }
+        .title-price p:first-of-type {
+    color: red;
+}
+#item-count{
+    font-size: 18px;
+    margin: 10px 0px;
+}
+    </style>
+<div id="item-count">
+    A Total of <span id="item-number">0</span> Items
+</div>
+    <!-- Products Section -->
+    <div class="products-list">
+        <!-- The products will be populated using JavaScript -->
+    </div>
+
+    <!-- Total Price and Submit Button -->
+    <div class="checkout-summary">
+        <p>Total Price: RM <span id="total-price">0.00</span></p>
+        <button onclick="proceedToPay()">Proceed to Checkout</button>
+    </div>
+</div>
+
+
+{% endblock %}

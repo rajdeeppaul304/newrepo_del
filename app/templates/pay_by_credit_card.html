@@ -1,0 +1,258 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="payment-page">
+    <h2>Pay by Credit Card</h2>
+    
+    <div class="brand-logos">
+        <!-- Replace these with your actual images -->
+        <img src="{{ url_for('static', filename='images/cards/max1.png') }}" alt="Amex">
+        <img src="{{ url_for('static', filename='images/cards/visa.png') }}" alt="Visa">
+        <img src="{{ url_for('static', filename='images/cards/discover.png') }}" alt="Mastercard">
+        <img src="{{ url_for('static', filename='images/cards/dcia.png') }}" alt="Mastercard">
+        <img src="{{ url_for('static', filename='images/cards/master.png') }}" alt="Mastercard">
+        <img src="{{ url_for('static', filename='images/cards/union.png') }}" alt="union">
+    </div>
+
+    <form id="payment-form" method="POST" action="{{ url_for('process_payment') }}">
+        <div class="form-group">
+            <label for="card-name">Name on Card</label>
+            <input type="text" id="card-name" name="card_name" placeholder="Enter Name on Card" required>
+        </div>
+
+        <div class="form-group">
+            <label for="card-number">Card Number</label>
+            <input type="text" id="card-number" name="card_number" placeholder="Enter Card Number" required>
+            <small id="card-number-error" class="error-message"></small>
+        </div>
+
+        <div class="flex-container">
+            <div class="form-group">
+                <label for="card-expiry">Expiry Date</label>
+                <input type="text" id="card-expiry" name="card_expiry" placeholder="MM/YY" required>
+                <small id="card-expiry-error" class="error-message"></small>
+            </div>
+            
+            <div class="form-group">
+                <label for="card-cvc">CVC</label>
+                <input type="text" id="card-cvc" name="card_cvc" placeholder="Enter CVC" required>
+                <small id="card-cvc-error" class="error-message"></small>
+            </div>
+        </div>
+
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+
+<style>
+.payment-page {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.flex-container .form-group{
+    width: 40%;
+}
+
+.flex-container {
+    flex-direction: row;
+    justify-content: space-between;
+
+
+}
+.payment-page h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand-logos {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.brand-logos img {
+    height: 25px;
+    margin: 0 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    display: block;
+}
+
+.flex-container {
+    display: flex;
+    gap: 10px;
+}
+
+.flex-container .form-group {
+    flex: 1;
+}
+
+button[type="submit"] {
+    width: 80%;
+    padding: 15px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 50px; /* Rounded edges */
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    display: block; /* Ensure it takes up 80% width */
+    margin: 20px auto; /* Center the button */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Shadow effect on hover */
+}
+
+button[type="submit"]:active {
+    background-color: #004494; /* Even darker shade when active */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Slightly darker shadow when active */
+}
+
+</style>
+
+<script>
+    // Validation script as before
+    document.getElementById('payment-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get form values
+        var cardName = document.getElementById('card-name').value;
+        var cardNumber = document.getElementById('card-number').value;
+        var cardExpiry = document.getElementById('card-expiry').value;
+        var cardCvc = document.getElementById('card-cvc').value;
+
+        // Validate card number, expiry date, and CVC
+        var isValid = true;
+
+        // Card number validation (simple Luhn's algorithm check)
+        function validateCardNumber(number) {
+            var sum = 0;
+            var shouldDouble = false;
+
+            // Reverse the card number and iterate through each digit
+            for (var i = number.length - 1; i >= 0; i--) {
+                var digit = parseInt(number.charAt(i), 10);
+
+                if (shouldDouble) {
+                    digit *= 2;
+                    if (digit > 9) digit -= 9;
+                }
+
+                sum += digit;
+                shouldDouble = !shouldDouble;
+            }
+
+            return (sum % 10 === 0);
+        }
+
+        if (!validateCardNumber(cardNumber.replace(/\s+/g, ''))) {
+            document.getElementById('card-number-error').textContent = 'Invalid card number.';
+            isValid = false;
+        } else {
+            document.getElementById('card-number-error').textContent = '';
+        }
+
+        // Expiry date validation
+        function validateCardExpiry(expiry) {
+            var [month, year] = expiry.split('/').map(num => parseInt(num, 10));
+            var now = new Date();
+            var currentMonth = now.getMonth() + 1;
+            var currentYear = now.getFullYear() % 100;
+            return month >= 1 && month <= 12 && (year > currentYear || (year === currentYear && month >= currentMonth));
+        }
+
+        if (!validateCardExpiry(cardExpiry)) {
+            document.getElementById('card-expiry-error').textContent = 'Invalid expiry date.';
+            isValid = false;
+        } else {
+            document.getElementById('card-expiry-error').textContent = '';
+        }
+
+        // CVC validation (3 digits for most cards, 4 for American Express)
+        function validateCardCvc(cvc) {
+            return /^\d{3,4}$/.test(cvc);
+        }
+
+        if (!validateCardCvc(cardCvc)) {
+            document.getElementById('card-cvc-error').textContent = 'Invalid CVC.';
+            isValid = false;
+        } else {
+            document.getElementById('card-cvc-error').textContent = '';
+        }
+
+        // If all fields are valid, send data to the backend
+        if (isValid) {
+            // Collect data from local storage
+            var localStorageData = {
+                cart: JSON.parse(localStorage.getItem('cart')) || {},
+                users: JSON.parse(localStorage.getItem('users')) || {},
+                address: JSON.parse(localStorage.getItem('address')) || {}
+            };
+            
+            // Prepare data to send to the backend
+            var formData = {
+                card_name: cardName,
+                card_number: cardNumber,
+                card_expiry: cardExpiry,
+                card_cvc: cardCvc,
+                local_storage_data: localStorageData
+            };
+            
+            // Send data to the backend using Fetch API
+            fetch('{{ url_for("process_payment") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the backend
+                console.log('Success:', data);
+                // Optionally redirect or show a success message
+                window.location.href = '{{ url_for("success_page") }}'; // Replace with your success page URL
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // Optionally show an error message
+            });
+        }
+    });
+</script>
+{% endblock %}

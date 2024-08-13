@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+
+    <style>
+        .s1 {
+            font-family: libre baskerville, Sans-serifs;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            color: #800909;
+            background-color: #fffbf0;
+            border: 2px solid #ff5c16;
+            border-radius: 40px;
+        }
+
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-family: 'Houschka-medium';
+            background-color: #f3efe6;
+            color: black;
+        }
+
+        input[type="submit"] {
+            background-color: #800909;
+            color: white;
+            cursor: pointer;
+            font-family: 'Houschka-medium';
+
+        }
+
+        input[type="submit"]:hover {
+            background-color: #800909;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+            display: none;
+            /* Initially hidden */
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #location {
+            width: 100%;
+            min-width: 100px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-family: 'Houschka-medium';
+        }
+
+        #suggestionList {
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            /* Ensure the dropdown appears above other elements */
+            width: 100%;
+        }
+
+        .suggestionItem {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .suggestionItem:hover {
+            background-color: #f0f0f0;
+        }
+
+        .response-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .response-item {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #f4eaea;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+
+        @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,600');
+
+        .s2 {
+            margin:20px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            background-size: cover;
+            font-family: "Poppins", sans-serif;
+            border: 2px solid #ff5c16;
+    border-radius: 20px;
+        background: #fffbf0;
+
+        }
+
+        .calendar {
+            width: 300px;
+            height: auto;
+            background: #fff;
+            box-sizing: border-box;
+            box-shadow: 0 5px 50px rgba(0, 0, 0, .5);
+        touch-action: manipulation;
+
+
+        }
+
+        .calendar .image {
+            width: 100%;
+            height: 200px;
+            background: url(https://astroarunpandit.org/wp-content/uploads/2024/04/horoscope-astrology-zodiac-horoscope-zodiac-fortune-sign-myth-stars-symbol-traditional_488220-5466.jpg);
+            background-size: cover;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            margin: 0;
+            color: #800909;
+        }
+
+        h3 {
+            font-weight: 500;
+                color: white;
+        }
+
+        .calendar .date {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(25px, 1fr));
+            grid-gap: 10px;
+            box-sizing: border-box;
+                background-color: #fffbf0;
+        }
+
+        .calendar .date div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 25px;
+            color: #262626;
+            border: 1px solid #ff3535;
+    border-radius: 20px;
+        }
+
+        .calendar .date div.day {
+            font-weight: 700;
+        }
+
+        .calendar .date div.day:first-child,
+        .calendar .date div.number:nth-child(7n + 1) {
+            color: #ff685d;
+            font-weight: 700;
+        }
+
+        .calendar .date div.number.active,
+        .calendar .date div.number:hover {
+            background: #ff3535;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+               
+        }
+       .responsive-container {
+    max-width: 650px;
+    margin: 20px ;
+    padding: 20px;
+    background-color: #fecda5;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    text-align: center; /* Center align the content */
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Arrange items vertically */
+    justify-content: flex-start; /* Align items to the start of the container */
+    align-items: flex-start; /* Align items to the start of the container */
+    color: #800909;
+}
+
+.responsive-container h2 {
+    margin-top: 0; /* Remove default margin */
+    text-align: center; /* Center align the heading */
+    padding-top: 20px;
+}
+
+.responsive-container .content {
+    /* Styles for the container content */
+    align-self: flex-start; /* Align content to the start of the container */
+}
+
+/* Add this media query at the end of your existing CSS */
+
+@media only screen and (max-width: 600px) {
+    .container {
+        padding: 20px; /* Adjust padding for smaller screens */
+        
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="submit"] {
+        width: calc(100% - 20px); /* Adjust input width */
+        margin-right: 0; /* Remove margin on the right side */
+        margin-bottom: 10px;
+    }
+
+    .calendar {
+        width: calc(100% - 40px); /* Adjust calendar width */
+        margin: 20px auto; /* Center calendar */
+    }
+
+    .s2 {
+        height: auto; /* Adjust section height */
+            margin: 15px;
+    }
+
+    .date {
+        grid-template-columns: repeat(7, 1fr); /* Adjust grid columns */
+    }
+
+    .calendar .date div {
+        height: 20px; /* Adjust height of date squares */
+        font-size: 12px; /* Adjust font size */
+        padding: 10px; /* Adjust padding */
+    }
+
+    .response-container {
+        padding: 10px; /* Adjust padding */
+    }
+
+    .response-item {
+        padding: 8px 12px; /* Adjust padding */
+        font-size: 14px; /* Adjust font size */
+    }
+
+    .responsive-container {
+        margin: 10px; /* Adjust margin */
+        padding: 10px; /* Adjust padding */
+        
+    }
+
+    .responsive-container h2 {
+        padding-top: 10px; /* Adjust padding */
+    }
+
+    .content {
+        padding: 10px; /* Adjust padding */
+    }
+}
+
+
+/* Add this media query at the end of your existing CSS */
+@media only screen and (max-width: 600px) {
+    .container {
+        padding: 20px; /* Adjust padding for smaller screens */
+    }
+
+    .s2 {
+        flex-direction: column; /* Change flex direction to column for smaller screens */
+        align-items: center; /* Center align items horizontally */
+        height: auto; /* Adjust section height */
+    }
+
+    .calendar {
+        width: calc(50% - 20px); /* Adjust calendar width */
+        margin-right: 20px; /* Add margin between calendar and content box */
+        margin-bottom: 20px; /* Add margin at the bottom */
+    }
+
+    .responsive-container {
+        max-width: 100%; /* Adjust maximum width */
+        margin: 20px auto; /* Center the container */
+        padding: 20px; /* Adjust padding */
+        display: flex; /* Use flexbox */
+        flex-direction: column; /* Arrange items vertically */
+        justify-content: flex-start; /* Align items to the start of the container */
+        align-items: flex-start; /* Align items to the start of the container */
+    }
+
+    .responsive-container h2 {
+        margin-top: 0; /* Remove default margin */
+        color: #333;
+        text-align: center; /* Center align the heading */
+        padding-top: 20px;
+    }
+
+    .content {
+        width: 100%; /* Make content box full width */
+        padding: 20px; /* Adjust padding */
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+    .calendar {
+        width: calc(100% - 40px); /* Adjust calendar width to fill the entire width */
+        margin: 20px auto; /* Center the calendar */
+    }
+
+    .date {
+        grid-template-columns: repeat(7, 1fr); /* Adjust grid columns */
+    }
+
+    .calendar .date div {
+        height: 20px; /* Adjust height of date squares */
+        font-size: 12px; /* Adjust font size */
+        padding: 10px; /* Adjust padding */
+    }
+}
+@media (max-width: 767px) {
+    /* Target mobile devices */
+    html {
+        touch-action: manipulation;
+        -ms-touch-action: manipulation;
+        touch-action: pan-x pan-y;
+        user-select: none;
+        -ms-user-select: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+}
+
+
+
+    </style>
+
+
+<section class="s1">
+<div class="container">
+<h2>Lucky Date Calculator</h2>
+<p>Harness the power of the stars and numbers with our all-in-one Lucky Dates Calculator. Determine your
+luckiest days for love, career, and personal growth with precise astrological and numerological
+analysis.</p>
+<form id="astrologyForm">
+<label for="name">Name:</label><br>
+<input type="text" style="color : Black;" id="name" name="name" required><br>
+<label for="dob">Date of Birth:</label><br>
+<input type="date" style="color : Black;" id="dob" name="dob" required><br>
+
+<input type="submit" value="Submit">
+</form>
+<div class="loader" id="loader"></div>
+</div>
+</section>
+<section class="s2" style="display:none;">
+<div class="responsive-container">
+<h2>Your Lucky Dates Are</h2>
+<div class="content">
+
+<p>This interactive calendar displays your lucky dates highlighted in orange . These dates have been calculated using a sophisticated blend of astrology and numerology, tailored specifically to your birth details and the areas of life you wish to enhance.</p>
+</div>
+</div>
+<div class="calendar">
+<div class="image">
+<h3>Year 2024</h3>
+</div>
+<div class="date">
+<div class="day">S</div>
+<div class="day">M</div>
+<div class="day">T</div>
+<div class="day">W</div>
+<div class="day">T</div>
+<div class="day">F</div>
+<div class="day">S</div>
+<div class="number"></div>
+<div class="number"></div>
+<div class="number"></div>
+<div class="number"></div>
+<div class="number" id="1">1</div>
+<div class="number" id="2">2</div>
+<div class="number" id="3">3</div>
+<div class="number" id="4">4</div>
+<div class="number" id="5">5</div>
+<div class="number" id="6">6</div>
+<div class="number" id="7">7</div>
+<div class="number" id="8">8</div>
+<div class="number" id="9">9</div>
+<div class="number" id="10">10</div>
+<div class="number" id="11">11</div>
+<div class="number" id="12">12</div>
+<div class="number" id="13">13</div>
+<div class="number" id="14">14</div>
+<div class="number" id="15">15</div>
+<div class="number" id="16">16</div>
+<div class="number" id="17">17</div>
+<div class="number" id="18">18</div>
+<div class="number" id="19">19</div>
+<div class="number" id="20">20</div>
+<div class="number" id="21">21</div>
+<div class="number" id="22">22</div>
+<div class="number" id="23">23</div>
+<div class="number" id="24">24</div>
+<div class="number" id="25">25</div>
+<div class="number" id="26">26</div>
+<div class="number" id="27">27</div>
+<div class="number" id="28">28</div>
+<div class="number" id="29">29</div>
+<div class="number" id="30">30</div>
+<div class="number" id="31">31</div>
+</div>
+</div>
+</section>
+<script>
+        let map;
+        let manager;
+        let lat = '22.572645', longs = '88.363892';
+        let headingT = 'Your Lucky Dates Are';
+
+        function renderResult(data) {
+            const responseContainer = document.getElementById('response-container');
+            responseContainer.innerHTML = '';
+            const heading = document.createElement('h2');
+            heading.textContent = headingT;
+            responseContainer.appendChild(heading);
+        }
+
+        function toggleCalendarVisibility() {
+            const calendarSection = document.querySelector('.s2');
+            calendarSection.style.display = (calendarSection.style.display === 'none' || calendarSection.style.display === '') ? 'flex' : 'none';
+        }
+
+        document.getElementById('astrologyForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            document.getElementById('loader').style.display = 'block';
+            toggleCalendarVisibility(); // Toggle visibility when form is submitted
+
+            const formData = new FormData(this);
+            const apiEndpoint = 'https://5aacma2621.execute-api.us-east-1.amazonaws.com/default/astro-backend/baby-names';
+            const apiKey = 'FZJwEj1yOj91DyRNeHNl41lVsOkejGM9FDfaYbji';
+            const bdy = {
+                key: 'lucky_dates',
+                birthdate: formData.get('dob'),
+                latitude: lat,
+                longitude: longs
+            };
+
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey
+                },
+                body: JSON.stringify(bdy)
+            };
+
+            fetch(apiEndpoint, requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.body.lucky_dates);
+                    data.body.lucky_dates.forEach(date => {
+                        const element = document.getElementById(date.toString());
+                        if (element) {
+                            element.classList.add('active');
+                        } else {
+                            console.log(`Element with id '${date}' not found.`);
+                        }
+                    });
+                    renderResult(data?.body?.lucky_dates)
+                    document.getElementById('loader').style.display = 'none';
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                    document.getElementById('loader').style.display = 'none';
+                });
+        });
+
+    </script>
+    
+</body>
+</html>

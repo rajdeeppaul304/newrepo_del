@@ -1,0 +1,388 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+    /* General container styles */
+.container-category {
+    display: block;
+    flex-direction: row;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: white;
+}
+
+/* Search Bar Styles */
+.search-bar {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.search-bar form {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-radius: 25px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar input[type="text"] {
+    flex-grow: 1;
+    border: none;
+    background: none;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.search-bar button {
+    background-color: #f5f5f5;
+    border: none;
+    color: #ccc;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Category Sidebar Styles */
+.category-sidebar {
+    width: 100px;
+    margin-right: 10px;
+    background-color: #fafafa;
+    /* padding: 15px; */
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: rgb(247, 247, 247);
+}
+
+.category-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-sidebar li {
+    margin-bottom: 10px;
+}
+
+.category-sidebar a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #333;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.category-sidebar a:hover,
+.category-sidebar a.active {
+    background-color: rgb(223, 178, 39);
+    color: #000;
+}
+
+/* Product Listing Styles */
+.products-list {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.product-item {
+    display: flex;
+    height: 79px;
+    background-color: #ffffff;
+    /* padding: 15px; */
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.product-item:hover {
+    transform: scale(1.05);
+}
+
+.product-item img {
+    width: 78px;
+    height: 79px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product-item h3 {
+    margin: 10px;
+    color: rgb(51, 51, 51);
+    display: flex;
+    font-size: 14px;
+font-weight: 500;
+}
+
+.product-item p {
+    font-size: 13px;
+    color: #e63946;
+    font-weight: bold;
+    margin: 10px;
+
+}
+
+.product-item p span{
+    font-size: 18px;
+    color: #e63946;
+    font-weight: bold;
+    margin: 0;
+
+}
+
+
+
+/* Button Styles */
+button {
+    background-color: #ffd700;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #f4b400;
+}
+
+.sidebar-product-list{
+    display: flex;
+}
+.price-buy{
+    display: flex;
+    justify-content: space-between;
+}
+
+.price-buy a{
+    font-size: 16px;
+    display: flex;
+    color: white;
+    background-color: rgb(223, 178, 39);
+    border-bottom-left-radius: 12px;
+border-bottom-right-radius: 12px;
+border-top-left-radius: 12px;
+border-top-right-radius: 12px;
+padding-bottom: 0px;
+padding-left: 11px;
+padding-right: 11px;
+align-items: center;
+padding-top: 0px;
+font-size: 12px;
+    margin: 10px;
+}
+
+.title-price-buy{
+    flex-grow: 1;
+}
+
+
+
+
+
+
+
+
+
+.cart-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.add-to-cart,
+.quantity-minus,
+.quantity-plus {
+    background-color: rgb(223, 178, 39); 
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add-to-cart:hover,
+.quantity-minus:hover,
+.quantity-plus:hover {
+    background-color:ffd700;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-value {
+    font-size: 16px;
+    margin: 0 10px;
+}
+
+
+.bottom-fixed-bar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.bottom-fixed-bar p {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.bottom-fixed-bar button {
+    background-color: #ffc107;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.bottom-fixed-bar button:hover {
+    background-color: #e0a800;
+}
+
+
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize cart from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Add a product to the cart
+        window.addToCart = function(productId, productPrice) {
+            let productIndex = cart.findIndex(item => item.id === productId);
+            if (productIndex === -1) {
+                cart.push({ id: productId, quantity: 1, price: productPrice });
+            } else {
+                cart[productIndex].quantity += 1;
+            }
+            saveCart();
+            updateCartDisplay(productId);
+            updateTotalPrice();
+        };
+
+        // Update product quantity in the cart
+        window.updateCart = function(productId, change) {
+            let productIndex = cart.findIndex(item => item.id === productId);
+            if (productIndex !== -1) {
+                cart[productIndex].quantity += change;
+                if (cart[productIndex].quantity <= 0) {
+                    cart.splice(productIndex, 1); // Remove item if quantity is 0
+                }
+            }
+            saveCart();
+            updateCartDisplay(productId);
+            updateTotalPrice();
+        };
+
+        // Update the cart display based on the cart state
+        function updateCartDisplay(productId) {
+            let productElement = document.querySelector(`[data-product-id="${productId}"]`);
+            if (!productElement) return;
+
+            let addToCartButton = productElement.querySelector('.add-to-cart');
+            let quantityControls = productElement.querySelector('.quantity-controls');
+            let quantityValue = quantityControls.querySelector('.quantity-value');
+
+            let productIndex = cart.findIndex(item => item.id === productId);
+            if (productIndex !== -1) {
+                addToCartButton.style.display = 'none';
+                quantityControls.style.display = 'flex';
+                quantityValue.textContent = cart[productIndex].quantity;
+            } else {
+                addToCartButton.style.display = 'block';
+                quantityControls.style.display = 'none';
+            }
+        }
+
+        // Update total price displayed in the bottom fixed bar
+        function updateTotalPrice() {
+            let totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+        }
+
+        // Initialize display for all products
+        let productIds = JSON.parse('{{ products|tojson|safe }}');
+        productIds.forEach(product => updateCartDisplay(product.id));
+        updateTotalPrice();
+    });
+</script>
+
+
+<div class="container-category">
+    <div class="search-bar">
+        <form method="get" action="{{ url_for('category') }}">
+            <input type="text" name="search" placeholder="Search Product" value="{{ search_query }}" />
+            <input type="hidden" name="category" value="{{ selected_category }}" />
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="sidebar-product-list">
+        <div class="category-sidebar">
+            <ul>
+                <li><a href="{{ url_for('category', category='all', search=search_query) }}" class="{{ 'active' if selected_category == 'all' else '' }}">ALL</a></li>
+                {% for category in categories %}
+                <li><a href="{{ url_for('category', category=category, search=search_query) }}" class="{{ 'active' if selected_category == category else '' }}">{{ category }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        
+        <div class="products-list">
+            {% for product in products %}
+            <div class="product-item"  data-product-id="{{ product['id'] }}">
+                <img onclick="window.location.href='/product/{{product.id}}'" src="{{ url_for('static', filename=product.src) }}" alt="{{ product['title'] }}">
+                <div class="title-price-buy">
+                    <h3 onclick="window.location.href='/product/{{product.id}}'">{{ product['title'] }}</h3>
+                    <div class="price-buy">
+                        <p>RM <span>{{ product['sale_price'] }}</span></p>
+                        <div class="cart-controls">
+                            <button class="add-to-cart" onclick="addToCart('{{ product['id'] }}', {{ product['sale_price'] }})">Add to Cart</button>
+                            <div class="quantity-controls" style="display: none;">
+                                <button class="quantity-minus" onclick="updateCart('{{ product['id'] }}', -1)">-</button>
+                                <span class="quantity-value">1</span>
+                                <button class="quantity-plus" onclick="updateCart('{{ product['id'] }}', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+
+
+
+    </div>
+
+</div>
+<div class="bottom-fixed-bar">
+    <p>Total Price: RM <span id="total-price">0.00</span></p>
+    <button onclick="window.location.href='/pay'">To Pay</button>
+</div>
+{% endblock %}

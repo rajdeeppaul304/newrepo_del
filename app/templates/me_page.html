@@ -1,0 +1,348 @@
+
+
+{% extends 'layout.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+    .me-page {
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+  
+    .profile-header {
+      background: #f5a623;
+
+      padding: 20px;
+      height: 200px;
+      color: #fff;
+      position: relative;
+    }
+  
+    .profile-info {
+      display: flex;
+      align-items: center;
+    }
+  
+    .avatar {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+    }
+  
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .phone-number {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .user-id {
+      font-size: 14px;
+    }
+  
+    .profile-stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 15px;
+    }
+  
+    .stat-item {
+      text-align: center;
+    }
+  
+    .stat-value {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .stat-label {
+      font-size: 14px;
+    }
+  
+
+    .section {
+      margin-top: 20px;
+      position: relative;
+    }
+  
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+  
+    .order-status, .service-items {
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    .status-item, .service-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 60px;
+    }
+  
+    .status-item i, .service-item i {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+
+.section-1{
+    position: absolute;
+}
+
+.section {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    height: 100px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); /* Add box shadow */
+}
+
+
+.section-header>span{
+
+    font-size: 18px;
+}
+
+.section-header>a{
+    margin: 0px;
+    color: grey;
+    font-size: 15px;
+}
+
+.services{
+    height: 120px;
+}
+
+.service-item img{
+    margin: 0;
+}
+
+
+.main-sections{
+    position: absolute;
+    width: 100vw;
+    padding: 15px;
+    top: 130px;
+}
+
+
+
+.fas{
+  color: #f5a623;
+
+}
+
+
+  </style>
+<div id="account-page">
+
+
+
+<div class="me-page">
+  <div class="profile-header">
+    <div class="profile-info">
+      <img src="{{ url_for('static', filename='images/avatar.png') }}" alt="Avatar" class="avatar">
+      <div class="user-info">
+        <div class="phone-number">789****23</div>
+        <div class="user-id">ID: <span class="id-random"></span></div>
+      </div>
+    </div>
+    <div class="profile-stats">
+      <div class="stat-item">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Collect</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Voucher</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Point</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="main-sections">
+
+    <div class="section orders">
+        <div class="section-header">
+          <span>My order</span>
+          <a href="/order_info">View all ></a>
+        </div>
+        <div class="order-status">
+          <div class="status-item">
+            <i class="fas fa-wallet"></i>
+            <span>To Pay</span>
+          </div>
+          <div class="status-item">
+            <i class="fas fa-truck"></i>
+    <span>To Ship</span>
+          </div>
+          <div class="status-item">
+            <i class="fas fa-handshake"></i>
+            <span>To Receive</span>
+          </div>
+          <div class="status-item">
+            <i class="fas fa-comment"></i>
+            <span>To Rate</span>
+          </div>
+          <div class="status-item">
+            <i class="fas fa-reply"></i>
+            <span>Refund</span>
+          </div>
+        </div>
+      </div>
+    
+      <div class="section services">
+        <div class="section-header">
+          <span>My service</span>
+        </div>
+        <div class="service-items">
+          <div class="service-item">
+            <img src="{{ url_for('static', filename='images/me_icons/menu_coupon.png') }}" alt="Avatar" class="avatar">
+            <span>Voucher</span>
+          </div>
+          <div class="service-item">
+            <img src="{{ url_for('static', filename='images/me_icons/menu_collection.png') }}" alt="Avatar" class="avatar">
+
+            <span>Collect</span>
+          </div>
+          <div class="service-item">
+            <img src="{{ url_for('static', filename='images/me_icons/menu_address.png') }}" alt="Avatar" class="avatar">
+
+            <span>Address</span>
+          </div>
+          <div class="service-item">
+            <img src="{{ url_for('static', filename='images/me_icons/menu_bargain.png') }}" alt="Avatar" class="avatar">
+
+            <span>Bargain</span>
+          </div>
+        </div>
+      </div>
+  </div>
+
+</div>
+
+
+
+<nav class="bottom-navbar">
+    <a href="/" class="nav-item">
+      <img  src="{{ url_for('static', filename='images/grey_home.png') }}" alt="Home" class="nav-icon">
+      <span >Home</span>
+    </a>
+    <a href="{{ url_for('category') }}" class="nav-item">
+      <img src="{{ url_for('static', filename='images/categories.png') }}" alt="Categories" class="nav-icon">
+      <span>Categories</span>
+    </a>
+    <a href="{{ url_for('cart') }}" class="nav-item">
+      <img src="{{ url_for('static', filename='images/cart.png') }}" alt="Cart" class="nav-icon">
+      <span>Cart</span>
+    </a>
+    <a href="{{ url_for('me_page') }}" class="nav-item">
+      <img src="{{ url_for('static', filename='images/red_me.png') }}" alt="Me" class="nav-icon">
+      <span style="color: rgb(246, 44, 44);">Me</span>
+    </a>
+  </nav>
+
+</div>
+
+<style>/* Container to center the message on the page */
+  .login-message-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f7f7f7;
+  }
+  
+  /* Card style for the message */
+  .login-message {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  /* Title style */
+  .login-message h2 {
+    font-size: 1.5rem;
+    color: #e74c3c;
+    margin-bottom: 1rem;
+  }
+  
+  /* Paragraph style */
+  .login-message p {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+  }
+  
+  /* Button style */
+  .login-button {
+    display: inline-block;
+    background-color: rgb(223, 178, 39);
+    color: #ffffff;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background-color: rgb(203, 178, 102);
+  }
+  </style>
+
+
+<div class="login-message-container">
+  <div class="login-message">
+    <h2>Access Denied</h2>
+    <p>You need to log in to view this page.</p>
+    <a href="/login" class="login-button">Login Now</a>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if 'users' key exists in local storage
+    if (!localStorage.getItem('users')) {
+        // Hide the account page if 'users' key does not exist
+        document.getElementById('account-page').style.display = 'none';
+    }
+
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+
+// Check if phone number exists in the users object
+const phoneNumber = users.username || 'Phone number not available';
+const id = users.id || 'ID not available';
+
+// Display the phone number in the .phone-number element
+document.querySelector('.phone-number').textContent = phoneNumber;
+
+document.querySelector('.id-random').textContent = id;
+
+});
+
+
+</script>
+
+{% endblock %}

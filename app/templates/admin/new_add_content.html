@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Content</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto my-8 p-4 bg-white rounded shadow">
+        <h2 class="text-2xl font-bold mb-4">Edit Content</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="mb-4">
+                {% for category, message in messages %}
+                    <div class="bg-{{ category }}-100 border border-{{ category }}-400 text-{{ category }}-700 px-4 py-3 rounded relative text-white bg-green-500" role="alert">
+                        <strong class="font-bold">{{ message }}</strong>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+        <div class="my-4 flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0 items-center">
+            <button type="button" onclick="prepareData()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-3/5 sm:w-auto mx-auto sm:mx-0">
+                Save Changes
+            </button>
+            <button type="button" onclick="openModal()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-3/5 sm:w-auto mx-auto sm:mx-0">
+                Add New Product
+            </button>
+            <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-3/5 sm:w-auto mx-auto sm:mx-0" onclick="openDeletePopup()">
+                Delete Products
+            </button>
+            <button type="button" onclick="window.location.href='{{ url_for('admin_bp.admin_index') }}'" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-md w-3/5 sm:w-auto mx-auto sm:mx-0">
+                Back to Admin Panel
+            </button>
+        </div>
+        
+        
+        
+        
+        
+        <form id="content-form" method="POST" action="{{ url_for('admin_bp.add_content') }}">
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                    <thead>
+                        <tr class="bg-gray-100 border-b border-gray-300">
+                            <th class="py-2 px-4 text-left text-gray-700">Image</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Title</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Tags</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Category</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Regular Price</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Sale Price</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Description</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Stock</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Sold</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Product ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key, item in content.items() %}
+                        <tr class="border-b border-gray-300">
+                            <td class="py-2 px-4">
+                                <img src="{{ url_for('static', filename='images/products/' ~ item.src) }}" alt="{{ item.title }}" class="w-16 h-16 object-cover rounded">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="title" data-key="{{ key }}" value="{{ item.title }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="tags" data-key="{{ key }}" value="{{ item.tags }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="category" data-key="{{ key }}" value="{{ item.category }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="regular_price" data-key="{{ key }}" value="{{ item.regular_price }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="sale_price" data-key="{{ key }}" value="{{ item.sale_price }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="description" data-key="{{ key }}" value="{{ item.description }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="stock" data-key="{{ key }}" value="{{ item.stock }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="sold" data-key="{{ key }}" value="{{ item.sold }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" name="id" data-key="{{ key }}" value="{{ item.id }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" readonly>
+                            </td>
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <input type="hidden" name="content_json" id="content_json">
+            <div class="my-4 flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0 items-center">
+                <button type="button" onclick="prepareData()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-3/5 sm:w-auto mx-auto sm:mx-0">
+                    Save Changes
+                </button>
+                <button type="button" onclick="openModal()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-3/5 sm:w-auto mx-auto sm:mx-0">
+                    Add New Product
+                </button>
+                <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-3/5 sm:w-auto mx-auto sm:mx-0" onclick="openDeletePopup()">
+                    Delete Products
+                </button>
+                <button type="button" onclick="window.location.href='{{ url_for('admin_bp.admin_index') }}'" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-md w-3/5 sm:w-auto mx-auto sm:mx-0">
+                    Back to Admin Panel
+                </button>
+            </div>
+            
+        </form>
+    </div>
+
+    <div id="addProductModal" class="modal">
+        <div class="modal-content">
+            <span class="block text-xl mb-4">Add New Product</span>
+            <div class="mb-2">
+                <label class="block text-gray-700">Title</label>
+                <input type="text" id="new_title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Tags</label>
+                <input type="text" id="new_tags" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Category</label>
+                <input type="text" id="new_category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Regular Price</label>
+                <input type="text" id="new_regular_price" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Sale Price</label>
+                <input type="text" id="new_sale_price" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Description</label>
+                <input type="text" id="new_description" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Stock</label>
+                <input type="text" id="new_stock" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Sold</label>
+                <input type="text" id="new_sold" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+
+            <div class="mb-2">
+                <label class="block text-gray-700">Upload Image</label>
+                <input type="file" id="new_image_file" accept="image/*" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Image Preview</label>
+                <img id="new_image_preview" src="" alt="Image Preview" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            </div>
+            <input type="hidden" id="new_src" value="">
+
+            <div class="mb-2">
+                <label class="block text-gray-700">Product ID (optional)</label>
+                <input type="text" id="new_id" placeholder="Leave empty for auto-generated ID" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mt-4">
+                <button onclick="addNewProduct()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    Add Product
+                </button>
+                <button onclick="closeModal()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-4">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="deletePopup" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+        <div class="bg-white p-4 rounded shadow-lg">
+            <h3 class="text-lg font-bold mb-2">Delete Products</h3>
+            <p>Enter Product IDs to delete (comma-separated):</p>
+            <input type="text" id="deleteProductIds" class="block w-full border rounded p-2 mb-4">
+            <div class="flex justify-end">
+                <button type="button" class="bg-gray-500 hover:bg-gray-700 text-white py-1 px-3 rounded mr-2" onclick="closeDeletePopup()">Cancel</button>
+                <button type="button" class="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded" onclick="deleteProducts()">Delete</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('new_image_file').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('new_image_preview').src = e.target.result;
+                    // Optional: Save the image filename for backend use
+                    document.getElementById('new_src').value = file.name;
+                };
+                reader.readAsDataURL(file);
+    
+                // Upload the file to the server
+                const formData = new FormData();
+                formData.append('file', file);
+    
+                fetch('{{ url_for("admin_bp.upload_image") }}', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('new_src').value = data.filename;
+                    }
+                })
+                .catch(error => console.error('Error uploading image:', error));
+            }
+        });
+    </script>
+
+
+<script>
+        let isFormSubmitting = true;
+
+    function openDeletePopup() {
+        document.getElementById('deletePopup').classList.remove('hidden');
+    }
+
+    function closeDeletePopup() {
+        document.getElementById('deletePopup').classList.add('hidden');
+    }
+
+    function deleteProducts() {
+        const productIds = document.getElementById('deleteProductIds').value.split(',').map(id => id.trim());
+        isFormSubmitting = true;
+        fetch('{{ url_for('admin_bp.delete_product') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ product_ids: productIds })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Products deleted successfully');
+                location.reload(); // Refresh the page or update the UI
+            } else {
+                alert(data.message);
+            }
+            closeDeletePopup();
+        });
+    }
+</script>
+    
+    <script>
+
+        function openModal() {
+            document.getElementById('addProductModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('addProductModal').style.display = 'none';
+        }
+
+        function addNewProduct() {
+            const newTitle = document.getElementById('new_title').value;
+            const newTags = document.getElementById('new_tags').value;
+            const newCategory = document.getElementById('new_category').value;
+            const newRegularPrice = document.getElementById('new_regular_price').value;
+            const newSalePrice = document.getElementById('new_sale_price').value;
+            const newSrc = document.getElementById('new_src').value;
+            const newDesc = document.getElementById('new_description').value;
+            const newStock = document.getElementById('new_stock').value;
+            const newSold = document.getElementById('new_sold').value;
+            const newId = document.getElementById('new_id').value;
+
+            // Set the flag to true before making the request
+            isFormSubmitting = true;
+
+            fetch('{{ url_for("admin_bp.add_product") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: newTitle,
+                    tags: newTags,
+                    category: newCategory,
+                    regular_price: newRegularPrice,
+                    sale_price: newSalePrice,
+                    src: newSrc,
+                    description: newDesc,
+                    stock: newStock,
+                    sold: newSold,
+                    id: newId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                closeModal();
+                // After the request is successful, reload the page
+                // Reset the flag after a short delay to ensure page reload doesn't trigger the beforeunload event
+                setTimeout(() => {
+                    // isFormSubmitting = false;
+                    location.reload(); // Reload the page to reflect the new product
+                }, 100);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Reset the flag in case of an error to avoid blocking future interactions
+                isFormSubmitting = false;
+            });
+        }
+    </script>
+
+<script>
+
+    window.addEventListener('beforeunload', function (e) {
+        if (isFormSubmitting) return; // Skip confirmation if the form is being submitted
+
+        const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
+        e.preventDefault();
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+    });
+
+    function prepareData() {
+        const form = document.getElementById('content-form');
+        const content = {};
+        const items = form.querySelectorAll('tr.border-b');
+
+        items.forEach(item => {
+            const titleInput = item.querySelector('input[name="title"]');
+            if (!titleInput) return;
+
+            const key = titleInput.getAttribute('data-key');
+
+            const imgElement = item.querySelector('img');
+            const src = imgElement ? imgElement.src.split('/').pop() : '';
+
+            const tagsInput = item.querySelector('input[name="tags"]');
+            const tags = tagsInput ? tagsInput.value : '';
+
+            const categoryInput = item.querySelector('input[name="category"]');
+            const category = categoryInput ? categoryInput.value : '';
+
+            const regularPriceInput = item.querySelector('input[name="regular_price"]');
+            const regular_price = regularPriceInput ? regularPriceInput.value : '';
+
+            const salePriceInput = item.querySelector('input[name="sale_price"]');
+            const sale_price = salePriceInput ? salePriceInput.value : '';
+
+            const DescInput = item.querySelector('input[name="description"]');
+            const description = DescInput ? DescInput.value : '';
+
+            const StockInput = item.querySelector('input[name="stock"]');
+            const stock = StockInput ? StockInput.value : '';
+
+            const SoldInput = item.querySelector('input[name="sold"]');
+            const sold = SoldInput ? SoldInput.value : '';
+
+            const idInput = item.querySelector('input[name="id"]');
+            const id = idInput ? idInput.value : '';
+
+            content[key] = {
+                src,
+                title: titleInput.value,
+                tags,
+                category,
+                regular_price,
+                sale_price,
+                description,
+                stock,
+                sold,
+                id
+            };
+        });
+
+        document.getElementById('content_json').value = JSON.stringify(content);
+        
+        // Set the flag to true to indicate the form is submitting
+        isFormSubmitting = true;
+        form.submit(); // Submit the form
+    }
+</script>
+
+<script>
+    function trackFormChanges() {
+        const form = document.getElementById('content-form');
+        const inputs = form.querySelectorAll('input, select, textarea'); // Include all input types if needed
+        let isChanged = false;
+
+        inputs.forEach(input => {
+            // Attach event listeners to detect changes
+            input.addEventListener('input', () => {
+                if (!isChanged) {
+                    isFormSubmitting = false;
+
+                    isChanged = true;
+                }
+            });
+        });
+
+        // Optionally, reset the isChanged flag if needed
+        form.addEventListener('reset', () => {
+            isChanged = false;
+        });
+    }
+
+    // Initialize the form change tracking
+    document.addEventListener('DOMContentLoaded', trackFormChanges);
+</script>
+
+</body>
+</html>

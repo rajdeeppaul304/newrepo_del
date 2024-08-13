@@ -1,0 +1,585 @@
+/* styles.css */
+
+/* Ensure the viewport width is considered for responsiveness */
+html {
+    box-sizing: border-box;
+}
+
+:root {
+    --swiper-pagination-bullet-width: 5px;
+    --swiper-pagination-bullet-height: 5px;
+    --swiper-pagination-bullet-border-radius: 50%;
+    --swiper-pagination-bullet-inactive-color: #888;
+    --swiper-pagination-bullet-inactive-opacity: 0.5;
+    --swiper-pagination-bottom: -18px; /* Adjust the value as needed */
+}
+  
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    
+    background-color: #F4F4F5; 
+}
+
+.container {
+    /* max-width: 420px; */
+    width: 100%;
+    margin: 0 auto; /* Center the container */
+    /* padding: 10px; Optional: Add padding */
+    /* background-color: #fff; Optional: Background color for the container */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); Optional: Add a shadow for depth */
+}
+
+h1 {
+    font-size: 24px;
+    text-align: center;
+    margin:0;
+}
+
+a {
+    display: block;
+    margin: 10px 0;
+    text-align: center;
+    text-decoration: none;
+    color: #007BFF;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* styles.css */
+/* Limit the width of the swiper-container and center it */
+.swiper-images-hero-section .swiper-container {
+    width: 100%;
+    /* max-width: 480px; */
+    margin: 0 auto; /* Center the swiper */
+    overflow: hidden; /* Prevent overflow */
+    height: 100vh;
+}
+
+/* Ensure swiper-slide images fit within the container */
+.swiper-images-hero-section .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover; /* Make the image cover the container */
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.swiper-images-hero-section .swiper-slide {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover; /* Make the image cover the container */
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+/* Styling for navigation buttons and pagination */
+.swiper-images-hero-section .swiper-button-next,
+.swiper-images-hero-section .swiper-button-prev {
+    color: #007BFF; /* Customize button color */
+}
+
+
+.swiper-images-hero-section .swiper-pagination-bullet-active{
+    background-color: white !important; /* Customize pagination color */
+
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border-bottom: 1px solid #ddd; */
+}
+
+.header .welcome {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.header .more {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.coupons {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+}
+
+.coupon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 48%;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.coupon.red {
+    background-color: #e63946;
+}
+
+.coupon.grey {
+    background-color: #ccc;
+}
+
+.coupon-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.amount {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.info, .received {
+    font-size: 12px;
+}
+
+.get-btn {
+    background-color: white;
+    color: #e63946;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 24%;
+}
+
+.menu-item img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+.menu-item span {
+    font-size: 12px;
+}
+
+
+.coupons{
+    display: flex;
+    padding: 3px;
+
+}
+
+.coupon_code1{
+    width: 43%;
+    padding: 3px;
+    max-width: 166px;
+}
+
+
+.coupon_code2{
+    width: 43%;
+    padding: 3px;
+    max-width: 166px;
+
+}
+
+.coupon_code3{
+    width: 10%;
+}
+
+.coupon_image{
+    width: 100%;
+}
+
+
+
+
+.bottom-navbar {
+    position: fixed;
+    height: 55px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center; /* Centers items vertically */
+    background-color: #fff;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+  
+  .nav-item {
+    color: rgb(40, 40, 40);
+    text-decoration: none;
+    text-align: center;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column; /* Aligns items in a column */
+    align-items: center; /* Centers items horizontally */
+  }
+  
+  .nav-icon {
+    width: 28px;
+    height: 28px;
+    display: block;
+  }
+  
+  .nav-item span {
+    display: block;
+  }
+  
+  .nav-item:hover {
+    color: #f0f0f0;
+  }
+  
+
+
+
+
+
+
+
+
+
+  .custom-section {
+    /* padding: 20px; */
+    background-color: rgb(255, 229, 227);
+
+
+    width: 100%;
+    margin-top: 11px;
+    margin: 11px auto 0 auto;
+    padding: 16px 11px;
+    padding: 16px 11px 3px 11px;
+    background-color: #ffe5e3;
+    background-size: 100% 100%;
+    border-radius: 13px;
+    box-sizing: border-box;
+    min-height: 200px;
+    padding-bottom: 16px;
+  }
+  
+  .flex-container {
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    gap: 10px; /* Space between the two divs */
+  }
+  
+  .text-gradient {
+    display: flex;
+    align-items: center; /* Vertically center the items */
+    gap: 0px; /* Space between the gradient text and additional text */
+  }
+  
+  .gradient-text {
+    background: linear-gradient(90deg, rgb(246, 44, 44) 0%, rgb(249, 110, 41) 100%);
+    font-size: 24px;
+
+
+    color: #fff;
+    height: 20px;
+
+    padding: 0 5px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 14px 0 14px 0;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    box-shadow: 3px 1px 1px 1px var(--view-minorColorT);
+    box-sizing: border-box;
+  }
+  
+  .example-text {
+    font-size: 16px;
+    
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    margin-right: 7px;
+    color: rgb(252, 60, 62);
+
+  }
+  
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    grid-gap: 10px; /* Space between grid items */
+  }
+  
+  .grid-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Ensure images cover the grid cell */
+  }
+  
+
+
+.products-outer-div{
+    padding-bottom: 80px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+        margin-bottom: 15px;
+}
+
+.tab {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: rgb(51, 51, 51);
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 17px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+
+}
+
+.tab span {
+    display: flex;
+    margin-top: 5px;
+    padding: 2px 5px;
+    font-size: 12px;
+    border-radius: 10px;
+    background: none;
+    color: inherit;
+    transition: background 0.3s, color 0.3s;
+    font-size: 13px;
+    align-items: center;
+    color: #999;
+}
+
+.tab.active {
+    /* background: rgb(233, 51, 35); */
+    color: rgb(249, 84, 41);
+    font-size: 17px;
+}
+
+.tab.active span {
+    /* background: white; */
+        background: rgb(249, 84, 41);
+border-radius: 8px;
+    color: white;
+    font-size: 13px;
+    height: 17px;
+}
+
+.products-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    /* height: 807px; */
+    box-sizing: border-box;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    overflow: hidden;
+
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    display: block;
+}
+
+.tags {
+    font-size: 14px;
+    color: rgb(51, 51, 51);
+    text-align: center;
+    margin-top: 5px;
+    user-select: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* custom swiper header */
+
+
+
+
+
+
+
+.custom-swiper-container {
+    width: 100%;
+    margin: auto;
+    background: linear-gradient(90deg, rgb(242, 207, 38) 50%, rgb(251, 177, 72) 100%);
+    overflow: hidden; /* Hide overflow to prevent issues with scrolling */
+}
+
+.custom-swiper-slide {
+    display: flex !important; 
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 0px!important;
+    padding-bottom: 10px!important;
+    position: relative;
+    width: 82px !important; 
+    height: auto !important; /* Allow height to adjust based on content */
+    box-sizing: border-box; /* Ensure padding is included in width/height calculations */
+}
+
+.custom-swiper-slide:hover {
+    text-decoration: underline;
+}
+
+.custom-swiper-slide.selected {
+    font-weight: 800;
+}
+
+.custom-swiper-slide.selected::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 3px;
+    background-color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Main Navbar Container */
+/* Main Navbar Container */
+.navbar {
+    background: linear-gradient(90deg, rgb(245, 219, 91) 50%, rgb(231, 193, 15) 100%);
+    box-sizing: border-box;
+    color: rgb(51, 51, 51);
+    display: flex;
+    align-items: center;
+    font-family: "PingFang SC", sans-serif;
+    font-size: 17px;
+    height: 62px;
+    width: 100%;
+    padding: 0 20px; /* Add padding to avoid content touching the edges */
+    box-sizing: border-box;
+    position: relative; /* Position relative to allow absolute positioning of children */
+    user-select: none;
+}
+
+/* Logo */
+.logo {
+    color: rgb(51, 51, 51);
+    font-family: "PingFang SC", sans-serif;
+    font-size: 17px;
+    height: 37px;
+    width: 25%;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%); /* Center logo vertically */
+    z-index: 1; /* Ensure logo is above other content */
+}
+
+/* Logo Image */
+.logo img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+}
+
+
+.search-container {
+    justify-content: center;
+    width: 75%;
+    display: flex;
+    align-items: center;
+    background-color: rgb(247, 247, 247);
+    border-radius: 18px;
+    border: 0.8px solid rgb(241, 241, 241);
+    box-sizing: border-box;
+    color: rgb(187, 187, 187);
+    font-size: 17px;
+    height: 36px;
+    padding: 0 12px;
+    margin-left: 25%; /* Create space for the logo */
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.search-icon {
+    width: 20px; /* Adjust size of the SVG icon */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 8px; /* Space between icon and text */
+    color: rgb(187, 187, 187);
+}
+
+/* Search Text */
+.search-text {
+    font-family: "PingFang SC", sans-serif;
+}
+
+

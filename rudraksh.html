@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astrology Calculator</title>
+  <script src="https://www.bing.com/api/maps/mapcontrol?key=Am-OINBmBYdnEx3I-7nRGg2uVsvR9HzzaiYzlOmD4qgmJj8FlSBPs9skFyds1D72"></script>
+  <style>
+    body {
+        font-family: libre baskerville,Sans-serifs;
+        margin: 0;
+        padding: 0;
+        background-color: #ffefe8;
+
+    }
+   
+    .container {
+         max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px;
+        color: #800909;
+        background-color: #fffbf0;
+        border: 2px solid #ff5c16;
+        border-radius: 40px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    input[type="submit"] {
+          width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-family: 'Houschka-medium';
+        background-color: #f3efe6;
+            color: black;
+
+    
+    }input[type="submit"]:hover {
+        background-color: #800909;
+    }
+
+
+    input[type="submit"] {
+        background-color: #800909;
+        color: white;
+        cursor: pointer;
+        font-family: 'Houschka-medium';
+
+    }
+
+    input[type="submit"]:hover {
+        background-color: #800909;
+    }
+h1     
+ {
+margin-bottom: 10px;
+color: #800909;
+text-transform: capitalize;
+font-family: var(--al-title-family);
+line-height: 1.2;
+}
+
+    .loader {
+        border: 4px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 4px solid #3498db;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+        margin: 20px auto;
+        display: none; /* Initially hidden */
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 20px; /* Add gap between product items */
+    }
+
+    .product-item {
+        width: calc(33.33% - 20px);
+        margin-bottom: 20px;
+        background-color: #ffffff; 
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        transition: all 0.3s ease; 
+    }
+
+    .product-item:hover {
+        transform: translateY(-5px); 
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    }
+
+    .product-image {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+    }
+
+    .product-name {
+        margin-top: 10px;
+        font-size: 18px; 
+        font-weight: bold; 
+    }
+
+    .product-link {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 15px;
+        background-color: #800909;
+        color: #FFFFFF
+;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .product-link:hover {
+       
+          color:rgb(255, 255, 255);
+    }
+
+    #searchBox {
+        width: 100%;
+        min-width: 100px; 
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-family: 'Houschka-medium';
+    }
+
+    #suggestionList {
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        max-height: 200px; 
+        overflow-y: auto; 
+        z-index: 1000; /* Ensure the dropdown appears above other elements */
+        width: 100%;
+    }
+
+    .suggestionItem {
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .suggestionItem:hover {
+        background-color: #f0f0f0;
+    }
+
+    @media screen and (max-width: 768px) {
+        .product-item {
+            width: calc(50% - 20px); 
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .product-item {
+            width: 100%; 
+        }
+    }
+</style>
+
+</head>
+
+<div class="container">
+  <h1>Lucky Rudraksha Calculators</h1>
+  <form id="astrologyForm">
+  <label for="name">Name:</label><br>
+  <input type="text" style="color:black;" id="name" name="name" required><br>
+  <label for="dob">Date of Birth:</label><br>
+  <input type="date" style="color:black;" id="dob" name="dob" required><br>
+  <label for="birth_time">Birth Time:</label><br>
+  <input type="time" style="color:black;" id="birth_time" name="birth_time" required><br>
+  <label for="purpose">Select Purpose:</label>
+  <select id="purpose">
+  <option value>GENERAL</option>
+  <option value="stability">For Stability</option>
+  <option value="growth">For Overall Growth</option>
+  <option value="educational">For Educational Growth</option>
+  <option value="financial">For Enhanced Financial Growth</option>
+  <option value="business">For Enhanced Business Growth</option>
+  <option value="concentration">For Enhanced Concentration</option>
+  <option value="respect">For Respect, Dignity & Confidence</option>
+  <option value="mental_health">For Enhanced Mental Health</option>
+  <option value="luxury">For Luxury</option>
+  <option value="love_relationship">For Love & Relationship Matters</option>
+  <option value="pregnancy_delay">For Overcoming Delay in Pregnancy</option>
+  <option value="decision_making">For Good Decision Making</option>
+  <option value="legal_matters">For Eliminating Legal Matters</option>
+  <option value="overthinking">For Overcoming Deep Overthinking Issues</option>
+  </select>
+  <br/>
+  <label for="location">Location:</label><br>
+  
+  <div id="searchBoxContainer"><input required="true" type="text" style="color:black; Background-color: #f3efe6 ;" id="searchBox" /></div>
+  <input type="submit" value="Submit">
+  </form>
+  <div id="productList" class="product-list">
+  </div>
+  <div class="loader" id="loader"></div>
+  </div>
+
+  
+<body>
+  
+
+  <script>
+
+let map;
+        let manager;
+        let lat = '22.572645' , longs = '88.363892',locationOn = false , selectedLoc ;
+
+        function renderProducts(products) {
+            // console.log(products)
+            const productListContainer = document.getElementById('productList');
+            productListContainer.innerHTML = ''; // Clear previous content
+
+            products.forEach(product => {
+            const productContainer = document.createElement('div');
+            productContainer.classList.add('product-item');
+
+                const image = document.createElement('img');
+                image.src = product.image;
+                image.alt = product.name;
+                image.classList.add('product-image');
+
+                const nameElement = document.createElement('h3');
+                nameElement.textContent = product.name;
+
+                const linkElement = document.createElement('a');
+                linkElement.href = product.url;
+                linkElement.target = '_blank';
+                linkElement.textContent = 'Buy now';
+                linkElement.classList.add('product-link');
+
+                productContainer.appendChild(image);
+                productContainer.appendChild(nameElement);
+                productContainer.appendChild(linkElement);
+
+                productListContainer.appendChild(productContainer);
+            });
+            document.getElementById('loader').style.display = 'none';
+        }
+
+        function selectedSuggestion(suggestionResult) {
+
+          if(!manager)return 
+
+          lat = suggestionResult?.location?.latitude
+          longs = suggestionResult?.location?.longitude
+          selectedLoc = suggestionResult?.formattedSuggestion
+          locationOn = true;
+        }
+
+        document.getElementById('searchBox').addEventListener('input', function(event) {
+            if (!manager) {
+                Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
+                    const options = {
+                            map: map,
+                            maxResults: 5,
+                            countryCode: 'IN', 
+                            placeSuggestions:'city'
+                        };
+
+                    manager = new Microsoft.Maps.AutosuggestManager(options);
+                    manager.attachAutosuggest('#searchBox', '#searchBoxContainer', selectedSuggestion);
+                    manager.getSuggestions(this.value);
+                    manager.getSuggestions(this.value);
+                });
+            } else {
+                 manager.getSuggestions(this.value);
+            }
+
+            selectedSuggestion(manager)
+        });
+
+
+
+        document.getElementById('astrologyForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+            if(selectedLoc != document.getElementById("searchBox").value){
+                alert('Please fill correct location')
+                return
+            }
+
+            document.getElementById('loader').style.display = 'block';
+
+            let map;
+
+            const selectedPurpose = document.getElementById("purpose").value;
+
+            const formData = new FormData(this);
+        
+            const apiEndpoint = 'https://3hmrjn3hli.execute-api.us-east-1.amazonaws.com/prd/lagna-core';
+            const apiKey = 'PWVN7FhSdp1mRbokpRbwl7sl9NBk9vkO40ki8UJK'; 
+            // console.log(formData.get('dob')  ,formData.get('birth_time') )
+            const urlParams = new URLSearchParams({
+                key: 'get-rudraksh',
+                dob: formData.get('dob'),
+                time: formData.get('birth_time'),
+                latitude: lat,
+                longitude: longs,
+                purpose:selectedPurpose
+            });
+
+            const requestOptions = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey
+                }
+            };
+
+            fetch(apiEndpoint + '?' + urlParams, requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data?.rudraksh);
+                    renderProducts(data?.rudraksh)
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                    document.getElementById('loader').style.display = 'none';
+                });
+            });
+
+  </script>
+</body>
+</html>
+
+
+

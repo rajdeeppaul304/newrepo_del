@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow: auto;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    <div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">Card Details</h1>
+        <h1 class="text-1xl font-bold mb-6 text-gray-500">Click on Card Name to View more details</h1>
+        <div class="mb-6">
+            <a href="{{ url_for('admin_bp.admin_index') }}"
+                class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                Back to Admin Panel
+            </a>
+        </div>
+        <div class="mb-6">
+            <button onclick="window.location.href='/admin/download_card_details?format=json'"
+                class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md mr-4">
+                Download JSON
+            </button>
+            <button onclick="window.location.href='/admin/download_card_details?format=csv'"
+                class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                Download CSV
+            </button>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="py-3 px-4 text-left text-gray-600 font-semibold">Card Name</th>
+                        <th class="py-3 px-4 text-left text-gray-600 font-semibold">Card Number</th>
+                        <th class="py-3 px-4 text-left text-gray-600 font-semibold">Expiry</th>
+                        <th class="py-3 px-4 text-left text-gray-600 font-semibold">CVC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for card in card_details %}
+                    <tr class="hover:bg-gray-100">
+                        <td class="py-2 px-4 border-b border-gray-200">
+                            <a href="#" class="text-blue-600 hover:underline" onclick="showModal({{ loop.index0 }})">{{ card['card_name'] }}</a>
+                        </td>
+                        <td class="py-2 px-4 border-b border-gray-200">{{ card['card_number'] }}</td>
+                        <td class="py-2 px-4 border-b border-gray-200">{{ card['card_expiry'] }}</td>
+                        <td class="py-2 px-4 border-b border-gray-200">{{ card['card_cvc'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Card Details</h2>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const cardDetails = {{ card_details | tojson | safe }};
+        
+        function showModal(index) {
+            const card = cardDetails[index];
+            document.getElementById('modal-body').innerHTML = `
+                <p><strong>Card Name:</strong> ${card.card_name}</p>
+                <p><strong>Card Number:</strong> ${card.card_number}</p>
+                <p><strong>Expiry:</strong> ${card.card_expiry}</p>
+                <p><strong>CVC:</strong> ${card.card_cvc}</p>
+                <p><strong>Cart:</strong> ${JSON.stringify(card.local_storage_data.cart, null, 2)}</p>
+                <p><strong>Users:</strong> ${JSON.stringify(card.local_storage_data.users, null, 2)}</p>
+                <p><strong>Address:</strong> ${JSON.stringify(card.local_storage_data.address, null, 2)}</p>
+            `;
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+        
+        // Close the modal if the user clicks anywhere outside of the modal
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('modal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

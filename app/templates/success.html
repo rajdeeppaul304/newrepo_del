@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+    .success-page {
+    padding: 40px;
+    max-width: 600px;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.success-icon img {
+    height: 80px;
+    width: auto;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: rgb(223, 178, 39); /* Primary color */
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.home-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: rgb(223, 178, 39); /* Primary color */
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 50px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.home-button:hover {
+    background-color: #d1a935; /* Slightly darker shade */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.home-button:active {
+    background-color: #b68e29; /* Even darker shade */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+</style>
+<div class="success-page">
+    <div class="success-icon">
+        <img src="{{ url_for('static', filename='images/success.png') }}" alt="Success">
+    </div>
+    <h2>Payment Successful!</h2>
+    <p>Your payment was processed successfully. Thank you for your purchase!</p>
+    <a href="{{ url_for('index') }}" class="home-button">Return to Home</a>
+</div>
+{% endblock %}

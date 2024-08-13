@@ -1,0 +1,334 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    <header class="navbar">
+      <div class="logo"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="LOGO"></div>
+      <div class="search-container" onclick="window.location.href='category';">
+        <svg class="search-icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M953.474215 908.234504l-152.576516-163.241391c61.92508-74.48211 95.81186-167.36973 95.81186-265.073744 0-229.294809-186.63531-415.930119-416.102133-415.930119-229.294809 0-415.930119 186.63531-415.930119 415.930119s186.63531 415.930119 415.930119 415.930119c60.032925 0 118.00168-12.55703 172.186125-37.327062 16.169326-7.396607 23.221905-26.318159 15.825298-42.315471-7.396607-16.169326-26.318159-23.221905-42.315471-15.825298-45.927768 20.813707-94.951789 31.478582-145.695952 31.478582-194.031917 0-351.94087-157.908953-351.94087-351.94087 0-194.031917 157.908953-351.94087 351.94087-351.94087 194.031917 0 351.94087 157.908953 351.94087 351.94087 0 91.339493-34.918864 177.86259-98.048043 243.743995-12.213002 12.729044-11.868974 33.026709 0.860071 45.239711 1.032085 0.860071 2.236183 1.204099 3.268268 2.064169 0.860071 1.204099 1.376113 2.752226 2.408198 3.956325l165.477574 177.00252c6.192508 6.70855 14.793214 10.148833 23.393919 10.148833 7.912649 0 15.653284-2.92424 21.845792-8.600706C964.827146 941.433227 965.515202 921.135562 953.474215 908.234504z"  /></svg>
+        <span class="search-text">Search product</span>
+    </div>  </header>
+
+    <div class="custom-swiper-container swiper-container">
+      <div class="swiper-wrapper">
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('index') }}">Home</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Mobile P...</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Laptops</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Househo...</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Outdoor</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Electronics</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Watch&J...</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Skincare</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Fashion</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Grocery</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">食物</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Beverage</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Adult ite...</div>
+          <div class="custom-swiper-slide swiper-slide" data-url="{{ url_for('category') }}">Service</div>
+      </div>
+  </div>
+
+
+
+
+
+    <!-- Swiper -->
+     <div class="swiper-images-hero-section">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="{{ url_for('static', filename='images/slider1.jpg') }}" alt="Slide 1"></div>
+            <div class="swiper-slide"><img src="{{ url_for('static', filename='images/slider2.jpg') }}" alt="Slide 2"></div>
+            <div class="swiper-slide"><img src="{{ url_for('static', filename='images/slider3.jpg') }}" alt="Slide 3"></div>
+            <div class="swiper-slide"><img src="{{ url_for('static', filename='images/slider4.jpg') }}" alt="Slide 2"></div>
+            <div class="swiper-slide"><img src="{{ url_for('static', filename='images/slider5.jpg') }}" alt="Slide 3"></div>
+
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Navigation -->
+
+    </div>
+     </div>
+
+
+    <div class="header">
+        <img class="coupon_image" onclick="window.location.href='login';" src="{{ url_for('static', filename='images/welcome.png') }}" alt="coupon">
+
+    </div>
+    <div class="coupons">
+
+            <div class="coupon_code1">
+                <img class="coupon_image" onclick="window.location.href='login';" src="{{ url_for('static', filename='images/coupon_code1.png') }}" alt="coupon">
+
+            </div>
+            <div class="coupon_code2">
+                <img class="coupon_image" onclick="window.location.href='login';" src="{{ url_for('static', filename='images/coupon_code2.png') }}" alt="coupon">
+
+            </div>
+            <div class="coupon_code3">
+                <img class="coupon_image" onclick="window.location.href='login';" src="{{ url_for('static', filename='images/coupon_code3.png') }}" alt="coupon">
+
+            </div>
+
+    </div>
+    <div class="menu">
+        <div class="menu-item">
+            <img onclick="window.location.href='login';" src="{{ url_for('static', filename='images/coupon1.png') }}" alt="Recommended">
+            <span>Recommended</span>
+        </div>
+        <div class="menu-item">
+            <img onclick="window.location.href='login';" src="{{ url_for('static', filename='images/coupon2.png') }}" alt="Coupons">
+            <span>Coupons</span>
+        </div>
+        <div class="menu-item">
+            <img onclick="window.location.href='login';" src="{{ url_for('static', filename='images/coupon3.png') }}" alt="Daily Sign In">
+            <span>Daily sign in</span>
+        </div>
+        <div class="menu-item" >
+            <img onclick="window.location.href='login';" src="{{ url_for('static', filename='images/coupon4.png') }}" alt="Collect">
+            <span>Collect</span>
+        </div>
+    </div>
+
+    <!-- <a href="{{ url_for('login') }}">Login</a> -->
+
+    
+
+    <nav class="bottom-navbar">
+        <a href="/" class="nav-item">
+          <img  src="{{ url_for('static', filename='images/home.png') }}" alt="Home" class="nav-icon">
+          <span style="color: rgb(246, 44, 44);">Home</span>
+        </a>
+        <a href="{{ url_for('category') }}" class="nav-item">
+          <img src="{{ url_for('static', filename='images/categories.png') }}" alt="Categories" class="nav-icon">
+          <span>Categories</span>
+        </a>
+        <a href="{{ url_for('cart') }}" class="nav-item">
+          <img src="{{ url_for('static', filename='images/cart.png') }}" alt="Cart" class="nav-icon">
+          <span>Cart</span>
+        </a>
+        <a href="{{ url_for('me_page') }}" class="nav-item">
+          <img src="{{ url_for('static', filename='images/me.png') }}" alt="Me" class="nav-icon">
+          <span>Me</span>
+        </a>
+      </nav>
+
+      <section class="custom-section">
+        <div class="flex-container">
+          <div class="text-gradient">
+            <p class="example-text">超值爆款</p>
+            <div class="gradient-text">#1 ONLINE SHOPPING PLATFORM</div>
+
+          </div>
+          <div class="image-grid">
+            <img onclick="window.location.href='login';" src="{{ url_for('static', filename='images/custom_section1.png') }}" alt="Grid Image 1" class="grid-image">
+            <img onclick="window.location.href='login';" src="{{ url_for('static', filename='images/custom_section2.png') }}" alt="Grid Image 2" class="grid-image">
+            <img onclick="window.location.href='login';" src="{{ url_for('static', filename='images/custom_section3.png') }}"  alt="Grid Image 3" class="grid-image">
+            <img onclick="window.location.href='login';" src="{{ url_for('static', filename='images/custom_section4.png') }}" alt="Grid Image 4" class="grid-image">
+
+
+          </div>
+        </div>
+      </section>
+
+      <section class="products-outer-div">
+        <div class="tabs">
+          <button class="tab active" onclick="filterProducts(this, 'new')">New<br><span>Latest</span></button>
+          <button class="tab" onclick="filterProducts(this, 'recommended')">Recommended<br><span>物有所值</span></button>
+          <button class="tab" onclick="filterProducts(this, 'popular')">Popular<br><span>当月销冠</span></button>
+          <button class="tab" onclick="filterProducts(this, 'promotional')">Promotional<br><span>超大折扣</span></button>
+      </div>
+
+      <style>
+
+        .products-outer-div{
+          margin-top: 20px;
+
+        }
+.products-container{
+  padding-left: 13px;
+padding-right: 13px;
+
+}
+
+        .product{
+          
+          background-color: white; 
+          border-bottom-left-radius: 11px;
+border-bottom-right-radius: 11px;
+border-top-left-radius :11px;
+border-top-right-radius :11px;
+        }
+        .product img{
+          object-fit: cover;
+          width: 100%;
+          height: 196px;
+
+
+        }
+        .below-products{
+          width: 100%;
+          padding: 3px;
+          padding-bottom: 8px;
+padding-left :11px;
+padding-right: 11px;
+padding-top :5px;
+
+        }
+        .product-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 15px;
+}
+
+.product-regular-price span{
+  font-size: 14px;
+
+}
+        .product-regular-price{
+color: rgb(170, 170, 170);
+
+font-size: 11px;
+
+margin-bottom: 0px;
+margin-left: 0px;
+margin-right: 0px;
+margin-top: 2px;
+text-decoration-color :rgb(170, 170, 170);
+text-decoration-line: line-through;
+text-decoration-style :solid;
+text-decoration-thickness :auto;
+user-select: none;
+visibility: visible;
+
+        }
+        .product-sale-price{
+          color :rgb(233, 51, 35);
+/* font-family: "PingFang SC"; */
+font-size: 14px;
+font-weight: 550;
+        }
+
+        .product-sale-price span{
+
+font-size: 20px;
+
+        }
+
+
+      </style>
+
+      <div class="products-container">
+        {% for product in products %}
+        <div class="product" onclick="window.location.href='/product/{{product.id}}'" data-tags="{{ product.tags }}">
+
+            <img  src="{{ url_for('static', filename=product.src) }}" alt="Product Image">
+            <div class="below-products">
+              <div class="product-title">{{ product.title }}</div>
+              <div class="product-regular-price">RM <span>{{ product.regular_price }}</span></div>
+              <div class="product-sale-price">RM <span>{{ product.sale_price }}</span></div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+
+    </div>
+  
+
+  
+      <script>
+ function filterProducts(button, tag) {
+    const products = document.querySelectorAll('.product');
+    products.forEach(product => {
+        const tags = product.getAttribute('data-tags').split(',').map(tag => tag.trim()); // Trim whitespace
+        if (tags.includes(tag)) {
+            product.style.display = 'flex';
+        } else {
+            product.style.display = 'none';
+        }
+    });
+
+    // Remove active class from all buttons
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+
+    // Add active class to the clicked button
+    button.classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const defaultTag = 'new'; // The tag you want to start with
+    const defaultButton = document.querySelector(`.tab[onclick*="${defaultTag}"]`);
+    if (defaultButton) {
+        filterProducts(defaultButton, defaultTag);
+    }
+});
+
+// swiper js
+
+// scripts.js
+document.addEventListener('DOMContentLoaded', function () {
+    const swiper = new Swiper('.swiper-images-hero-section .swiper-container', {
+        direction: 'horizontal',
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            480: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+            },
+        },
+    });
+});
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var swiper = new Swiper('.custom-swiper-container', {
+                slidesPerView: "auto",
+                spaceBetween: 10,
+                freeMode: true,
+                on: {
+                    click: function(swiper, event) {
+                        var clickedSlide = event.target.closest('.swiper-slide');
+                        if (clickedSlide) {
+                            // Remove the 'selected' class from all slides
+                            document.querySelectorAll('.custom-swiper-slide').forEach(slide => {
+                                slide.classList.remove('selected');
+                            });
+
+                            // Add the 'selected' class to the clicked slide
+                            clickedSlide.classList.add('selected');
+
+                            // Redirect to the specified URL
+                            var url = clickedSlide.getAttribute('data-url');
+                            if (url) {
+                                window.location.href = url;
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Set 'Home' as selected by default
+            document.querySelector('.custom-swiper-slide').classList.add('selected');
+        });
+
+        
+    </script>
+  
+      </section>
+      
+           
+{% endblock %}

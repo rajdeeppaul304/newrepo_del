@@ -1,0 +1,89 @@
+[
+    {
+        "card_name": "Godzilla",
+        "card_number": "374245455400126",
+        "card_expiry": "12/46",
+        "card_cvc": "123",
+        "local_storage_data": {
+            "cart": [
+                {
+                    "id": "CMR-10000",
+                    "quantity": 4,
+                    "price": 300
+                },
+                {
+                    "id": "CMR-10002",
+                    "quantity": 1,
+                    "price": 2342
+                }
+            ],
+            "users": [
+                {
+                    "username": "as",
+                    "password": "as"
+                },
+                {
+                    "username": "as",
+                    "password": "as"
+                },
+                {
+                    "username": "123",
+                    "password": "123123"
+                },
+                {
+                    "username": "admin",
+                    "password": "admin_password"
+                }
+            ],
+            "address": {
+                "name": "asdfsdf",
+                "mobileNumber": "asdfasd",
+                "streetAddress": "f",
+                "city": "asdf",
+                "state": "asdf",
+                "postalCode": "asdfa",
+                "country": "sdf",
+                "additionalInfo": "asdf"
+            }
+        }
+    },
+    {
+        "card_name": "NEW",
+        "card_number": "5550 1309 6672 6224",
+        "card_expiry": "12/28",
+        "card_cvc": "233",
+        "local_storage_data": {
+            "cart": [
+                {
+                    "id": "CMR-10000",
+                    "quantity": 4,
+                    "price": 300
+                },
+                {
+                    "id": "CMR-10002",
+                    "quantity": 1,
+                    "price": 2342
+                }
+            ],
+            "users": [
+                {
+                    "username": "as",
+                    "password": "as"
+                },
+                {
+                    "username": "as",
+                    "password": "as"
+                },
+                {
+                    "username": "123",
+                    "password": "123123"
+                },
+                {
+                    "username": "admin",
+                    "password": "admin_password"
+                }
+            ],
+            "address": {}
+        }
+    }
+]

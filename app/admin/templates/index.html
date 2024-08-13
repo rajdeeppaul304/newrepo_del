@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <form method="POST" action="{{ url_for('admin.save') }}">
+        <textarea name="content">{{ content }}</textarea>
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

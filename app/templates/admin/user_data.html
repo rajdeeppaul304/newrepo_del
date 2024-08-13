@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    <div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">User Data</h1>
+
+        <!-- Back to Admin Panel Button -->
+        <div class="mb-6">
+            <a href="{{ url_for('admin_bp.admin_index') }}"
+                class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                Back to Admin Panel
+            </a>
+        </div>
+        <div class="mb-6">
+            <button onclick="window.location.href='/admin/download?format=json'"
+                class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md mr-4">
+                Download JSON
+            </button>
+            <button onclick="window.location.href='/admin/download?format=csv'"
+                class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                Download CSV
+            </button>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="py-3 px-4 text-left text-gray-600 font-semibold">Username</th>
+                        <th class="py-3 px-4 text-left text-gray-600 font-semibold">Password</th>
+                        <th class="py-3 px-4 text-left text-gray-600 font-semibold">Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for login in user_data %}
+                    <tr class="hover:bg-gray-100">
+                        <td class="py-2 px-4 border-b border-gray-200">{{ login['username'] }}</td>
+                        <td class="py-2 px-4 border-b border-gray-200">{{ login['password'] }}</td>
+                        <td class="py-2 px-4 border-b border-gray-200">{{ login['timestamp'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
