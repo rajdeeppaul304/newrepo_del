@@ -1,2 +1,3 @@
-flask
+Flask
 flask_login
+werkzeug==2.3.8
