@@ -312,7 +312,7 @@
   </style>
 
 
-<div class="login-message-container">
+<div id="accessdenied" class="login-message-container">
   <div class="login-message">
     <h2>Access Denied</h2>
     <p>You need to log in to view this page.</p>
@@ -327,6 +327,10 @@
     if (!localStorage.getItem('users')) {
         // Hide the account page if 'users' key does not exist
         document.getElementById('account-page').style.display = 'none';
+    }
+    else{
+      document.getElementById('accessdenied').style.display = 'none';
+
     }
 
     const users = JSON.parse(localStorage.getItem('users')) || {};

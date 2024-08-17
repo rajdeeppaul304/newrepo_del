@@ -220,6 +220,48 @@
 
 </style>
 
+<style>
+    .cart-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin-top: 10px; */
+}
+
+.add-to-cart,
+.quantity-minus,
+.quantity-plus {
+    background-color: rgb(223, 178, 39); 
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add-to-cart:hover,
+.quantity-minus:hover,
+.quantity-plus:hover {
+    background-color:ffd700;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-value {
+    font-size: 16px;
+    margin: 0 10px;
+}
+
+#total-price-p{
+    padding: 0px 10px;
+}
+
+</style>
+
 <div class="product-detail-container">
     <div class="product-image-carousel">
         <img src="{{ url_for('static', filename= product.src) }}" alt="{{ product.title }}">
@@ -256,6 +298,74 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize cart from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Add a product to the cart
+        window.addToCart = function(productId, productPrice) {
+            let productIndex = cart.findIndex(item => item.id === productId);
+            if (productIndex === -1) {
+                cart.push({ id: productId, quantity: 1, price: productPrice });
+            } else {
+                cart[productIndex].quantity += 1;
+            }
+            saveCart();
+            updateCartDisplay(productId);
+            updateTotalPrice();
+        };
+
+        window.updateCart = function(productId, change) {
+            let productIndex = cart.findIndex(item => item.id === productId);
+            if (productIndex !== -1) {
+                cart[productIndex].quantity += change;
+                if (cart[productIndex].quantity <= 0) {
+                    cart.splice(productIndex, 1); // Remove item if quantity is 0
+                }
+            }
+            saveCart();
+            updateCartDisplay(productId);
+            updateTotalPrice();
+        };
+
+        function updateCartDisplay(productId) {
+            let productElement = document.getElementById(`cart-controller`);
+            if (!productElement) return;
+
+            let addToCartButton = productElement.querySelector('.add-to-cart');
+            let quantityControls = productElement.querySelector('.quantity-controls');
+            let quantityValue = quantityControls.querySelector('.quantity-value');
+
+            let productIndex = cart.findIndex(item => item.id === productId);
+            if (productIndex !== -1) {
+                addToCartButton.style.display = 'none';
+                quantityControls.style.display = 'flex';
+                quantityValue.textContent = cart[productIndex].quantity;
+            } else {
+                addToCartButton.style.display = 'block';
+                quantityControls.style.display = 'none';
+            }
+        }
+
+
+        // Update product quantity in the cart
+        function updateTotalPrice() {
+            let totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+        }
+        updateCartDisplay('{{ product['id'] }}');
+
+        updateTotalPrice()
+        // Initialize display for all products
+
+    });
+</script>
+
 
 <div class="bottom-navbar">
     <a href="/" class="nav-item">
@@ -266,9 +376,21 @@
         <i class="fas fa-cart-shopping"></i>
         <span>Cart</span>
     </a>
-    <button class="add-to-cart">
-        <span>Add to Cart</span>
-    </button>
+    <a href="/checkout" class="nav-item">
+        <i class="fas fa-credit-card"></i>
+        <span>checkout</span>
+    </a>
+    <p id="total-price-p" >RM <span id="total-price">0.00</span></p>
+
+
+    <div id="cart-controller" class="cart-controls">
+        <button class="add-to-cart" onclick="addToCart('{{ product['id'] }}', {{ product['sale_price'] }})">Add to Cart</button>
+        <div class="quantity-controls" style="display: none;">
+            <button class="quantity-minus" onclick="updateCart('{{ product['id'] }}', -1)">-</button>
+            <span class="quantity-value">1</span>
+            <button class="quantity-plus" onclick="updateCart('{{ product['id'] }}', 1)">+</button>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
